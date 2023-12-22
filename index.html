@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/filter.css">
+<link rel="stylesheet" href="css/nouislider.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/tailDT.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/wNumb.js"></script>
+        <script src="data/DISSOLVE_RAWAN_1.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-6.842561718457503,106.21000063156963],[-6.291252578288995,107.32909036249164]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_Positron_0');
+        map.getPane('pane_Positron_0').style.zIndex = 400;
+        var layer_Positron_0 = L.tileLayer('https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            pane: 'pane_Positron_0',
+            opacity: 1.0,
+            attribution: '<a href="https://cartodb.com/basemaps/">Map tiles by CartoDB, under CC BY 3.0. Data by OpenStreetMap, under ODbL.</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_Positron_0;
+        map.addLayer(layer_Positron_0);
+        function pop_DISSOLVE_RAWAN_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Legenda'] !== null ? autolinker.link(feature.properties['Legenda'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Skor_TL'] !== null ? autolinker.link(feature.properties['Skor_TL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['BOBOT_TGL'] !== null ? autolinker.link(feature.properties['BOBOT_TGL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SYMBOLS'] !== null ? autolinker.link(feature.properties['SYMBOLS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME'] !== null ? autolinker.link(feature.properties['NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GEOLOGY</th>\
+                        <td>' + (feature.properties['GEOLOGY'] !== null ? autolinker.link(feature.properties['GEOLOGY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Skor_G'] !== null ? autolinker.link(feature.properties['Skor_G'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['BOBOT_G'] !== null ? autolinker.link(feature.properties['BOBOT_G'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SNUM'] !== null ? autolinker.link(feature.properties['SNUM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FAOSOIL'] !== null ? autolinker.link(feature.properties['FAOSOIL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DOMSOI'] !== null ? autolinker.link(feature.properties['DOMSOI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SQKM'] !== null ? autolinker.link(feature.properties['SQKM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Soil</th>\
+                        <td>' + (feature.properties['Soil'] !== null ? autolinker.link(feature.properties['Soil'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Skor_JT'] !== null ? autolinker.link(feature.properties['Skor_JT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['BOBOT_JT'] !== null ? autolinker.link(feature.properties['BOBOT_JT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['gridcode'] !== null ? autolinker.link(feature.properties['gridcode'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Kelas_Lere'] !== null ? autolinker.link(feature.properties['Kelas_Lere'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Kemiringan</th>\
+                        <td>' + (feature.properties['Kemiringan'] !== null ? autolinker.link(feature.properties['Kemiringan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SKOR_LRNG'] !== null ? autolinker.link(feature.properties['SKOR_LRNG'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['BOBOT_LRNG'] !== null ? autolinker.link(feature.properties['BOBOT_LRNG'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? autolinker.link(feature.properties['Id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['gridcode_2'] !== null ? autolinker.link(feature.properties['gridcode_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Int_Hujan</th>\
+                        <td>' + (feature.properties['Int_Hujan'] !== null ? autolinker.link(feature.properties['Int_Hujan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Skol_ICH'] !== null ? autolinker.link(feature.properties['Skol_ICH'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Bobot_ICH'] !== null ? autolinker.link(feature.properties['Bobot_ICH'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SKOR_TOTAL</th>\
+                        <td>' + (feature.properties['SKOR_TOTAL'] !== null ? autolinker.link(feature.properties['SKOR_TOTAL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KELAS'] !== null ? autolinker.link(feature.properties['KELAS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KELAS_RWN'] !== null ? autolinker.link(feature.properties['KELAS_RWN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">KLS_RAWAN</th>\
+                        <td>' + (feature.properties['KLS_RAWAN'] !== null ? autolinker.link(feature.properties['KLS_RAWAN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_DISSOLVE_RAWAN_1_0(feature) {
+            switch(String(feature.properties['KLS_RAWAN'])) {
+                case 'Sangat Rendah':
+                    return {
+                pane: 'pane_DISSOLVE_RAWAN_1',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,238,185,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Rendah':
+                    return {
+                pane: 'pane_DISSOLVE_RAWAN_1',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,190,165,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Sedang':
+                    return {
+                pane: 'pane_DISSOLVE_RAWAN_1',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,112,80,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Tinggi':
+                    return {
+                pane: 'pane_DISSOLVE_RAWAN_1',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(211,32,32,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Sangat Tinggi':
+                    return {
+                pane: 'pane_DISSOLVE_RAWAN_1',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(136,0,18,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_DISSOLVE_RAWAN_1');
+        map.getPane('pane_DISSOLVE_RAWAN_1').style.zIndex = 401;
+        map.getPane('pane_DISSOLVE_RAWAN_1').style['mix-blend-mode'] = 'normal';
+        var layer_DISSOLVE_RAWAN_1 = new L.geoJson(json_DISSOLVE_RAWAN_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_DISSOLVE_RAWAN_1',
+            layerName: 'layer_DISSOLVE_RAWAN_1',
+            pane: 'pane_DISSOLVE_RAWAN_1',
+            onEachFeature: pop_DISSOLVE_RAWAN_1,
+            style: style_DISSOLVE_RAWAN_1_0,
+        });
+        bounds_group.addLayer(layer_DISSOLVE_RAWAN_1);
+        map.addLayer(layer_DISSOLVE_RAWAN_1);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'DISSOLVE_RAWAN<br /><table><tr><td style="text-align: center;"><img src="legend/DISSOLVE_RAWAN_1_SangatRendah0.png" /></td><td>Sangat Rendah</td></tr><tr><td style="text-align: center;"><img src="legend/DISSOLVE_RAWAN_1_Rendah1.png" /></td><td>Rendah</td></tr><tr><td style="text-align: center;"><img src="legend/DISSOLVE_RAWAN_1_Sedang2.png" /></td><td>Sedang</td></tr><tr><td style="text-align: center;"><img src="legend/DISSOLVE_RAWAN_1_Tinggi3.png" /></td><td>Tinggi</td></tr><tr><td style="text-align: center;"><img src="legend/DISSOLVE_RAWAN_1_SangatTinggi4.png" /></td><td>Sangat Tinggi</td></tr></table>': layer_DISSOLVE_RAWAN_1,"Positron": layer_Positron_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        var mapDiv = document.getElementById('map');
+        var row = document.createElement('div');
+        row.className="row";
+        row.id="all";
+        row.style.height = "100%";
+        var col1 = document.createElement('div');
+        col1.className="col9";
+        col1.id = "mapWindow";
+        col1.style.height = "99%";
+        col1.style.width = "80%";
+        col1.style.display = "inline-block";
+        var col2 = document.createElement('div');
+        col2.className="col3";
+        col2.id = "menu";
+        col2.style.display = "inline-block";
+        mapDiv.parentNode.insertBefore(row, mapDiv);
+        document.getElementById("all").appendChild(col1);
+        document.getElementById("all").appendChild(col2);
+        col1.appendChild(mapDiv)
+        var Filters = {"Kemiringan": "str","Legenda": "str","KLS_RAWAN": "str","Int_Hujan": "str","Soil": "str","GEOLOGY": "str"};
+        function filterFunc() {
+          map.eachLayer(function(lyr){
+          if ("options" in lyr && "dataVar" in lyr["options"]){
+            features = this[lyr["options"]["dataVar"]].features.slice(0);
+            try{
+              for (key in Filters){
+                keyS = key.replace(/[^a-zA-Z0-9_]/g, "")
+                if (Filters[key] == "str" || Filters[key] == "bool"){
+                  var selection = [];
+                  var options = document.getElementById("sel_" + keyS).options
+                  for (var i=0; i < options.length; i++) {
+                    if (options[i].selected) selection.push(options[i].value);
+                  }
+                    try{
+                      if (key in features[0].properties){
+                        for (i = features.length - 1;
+                          i >= 0; --i){
+                          if (selection.indexOf(
+                          features[i].properties[key])<0
+                          && selection.length>0) {
+                          features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                  }
+                }
+                if (Filters[key] == "int"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (parseInt(features[i].properties[key])
+                          < sliderVals[0]
+                          || parseInt(features[i].properties[key])
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "real"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (features[i].properties[key]
+                          < sliderVals[0]
+                          || features[i].properties[key]
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "date"
+                  || Filters[key] == "datetime"
+                  || Filters[key] == "time"){
+                  try{
+                    if (key in features[0].properties){
+                      HTMLkey = key.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '');
+                      startdate = document.getElementById("dat_" +
+                        HTMLkey + "_date1").value.replace(" ", "T");
+                      enddate = document.getElementById("dat_" +
+                        HTMLkey + "_date2").value.replace(" ", "T");
+                      for (i = features.length - 1; i >= 0; --i){
+                        if (features[i].properties[key] < startdate
+                          || features[i].properties[key] > enddate){
+                          features.splice(i,1);
+                        }
+                      }
+                    }
+                  } catch(err){
+                  }
+                }
+              }
+            } catch(err){
+            }
+          this[lyr["options"]["layerName"]].clearLayers();
+          this[lyr["options"]["layerName"]].addData(features);
+          }
+          })
+        }
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_Kemiringan = document.createElement('div');
+            div_Kemiringan.id = "div_Kemiringan";
+            div_Kemiringan.className= "filterselect";
+            document.getElementById("menu").appendChild(div_Kemiringan);
+            sel_Kemiringan = document.createElement('select');
+            sel_Kemiringan.multiple = true;
+            sel_Kemiringan.size = 5;
+            sel_Kemiringan.id = "sel_Kemiringan";
+            var Kemiringan_options_str = "<option value='' unselected></option>";
+            sel_Kemiringan.onchange = function(){filterFunc()};
+            Kemiringan_options_str  += '<option value="0-8%">0-8%</option>';
+            Kemiringan_options_str  += '<option value="15-25%">15-25%</option>';
+            Kemiringan_options_str  += '<option value="25-45%">25-45%</option>';
+            Kemiringan_options_str  += '<option value="8-15%">8-15%</option>';
+            Kemiringan_options_str  += '<option value=">45%">>45%</option>';
+            sel_Kemiringan.innerHTML = Kemiringan_options_str;
+            div_Kemiringan.appendChild(sel_Kemiringan);
+            var lab_Kemiringan = document.createElement('div');
+            lab_Kemiringan.innerHTML = 'Kemiringan';
+            lab_Kemiringan.className = 'filterlabel';
+            div_Kemiringan.appendChild(lab_Kemiringan);
+            var reset_Kemiringan = document.createElement('div');
+            reset_Kemiringan.innerHTML = 'clear filter';
+            reset_Kemiringan.className = 'filterlabel';
+            reset_Kemiringan.onclick = function() {
+                var options = document.getElementById("sel_Kemiringan").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_Kemiringan.appendChild(reset_Kemiringan);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_Legenda = document.createElement('div');
+            div_Legenda.id = "div_Legenda";
+            div_Legenda.className= "filterselect";
+            document.getElementById("menu").appendChild(div_Legenda);
+            sel_Legenda = document.createElement('select');
+            sel_Legenda.multiple = true;
+            sel_Legenda.size = 6;
+            sel_Legenda.id = "sel_Legenda";
+            var Legenda_options_str = "<option value='' unselected></option>";
+            sel_Legenda.onchange = function(){filterFunc()};
+            Legenda_options_str  += '<option value="Badan Air">Badan Air</option>';
+            Legenda_options_str  += '<option value="Belukar">Belukar</option>';
+            Legenda_options_str  += '<option value="Hutan Lahan Kering Primer">Hutan Lahan Kering Primer</option>';
+            Legenda_options_str  += '<option value="Hutan Lahan Kering Sekunder">Hutan Lahan Kering Sekunder</option>';
+            Legenda_options_str  += '<option value="Pemukiman">Pemukiman</option>';
+            Legenda_options_str  += '<option value="Pertanian Lahan Kering">Pertanian Lahan Kering</option>';
+            sel_Legenda.innerHTML = Legenda_options_str;
+            div_Legenda.appendChild(sel_Legenda);
+            var lab_Legenda = document.createElement('div');
+            lab_Legenda.innerHTML = 'Legenda';
+            lab_Legenda.className = 'filterlabel';
+            div_Legenda.appendChild(lab_Legenda);
+            var reset_Legenda = document.createElement('div');
+            reset_Legenda.innerHTML = 'clear filter';
+            reset_Legenda.className = 'filterlabel';
+            reset_Legenda.onclick = function() {
+                var options = document.getElementById("sel_Legenda").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_Legenda.appendChild(reset_Legenda);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_KLS_RAWAN = document.createElement('div');
+            div_KLS_RAWAN.id = "div_KLS_RAWAN";
+            div_KLS_RAWAN.className= "filterselect";
+            document.getElementById("menu").appendChild(div_KLS_RAWAN);
+            sel_KLS_RAWAN = document.createElement('select');
+            sel_KLS_RAWAN.multiple = true;
+            sel_KLS_RAWAN.size = 6;
+            sel_KLS_RAWAN.id = "sel_KLS_RAWAN";
+            var KLS_RAWAN_options_str = "<option value='' unselected></option>";
+            sel_KLS_RAWAN.onchange = function(){filterFunc()};
+            KLS_RAWAN_options_str  += '<option value="NULL">NULL</option>';
+            KLS_RAWAN_options_str  += '<option value="Rendah">Rendah</option>';
+            KLS_RAWAN_options_str  += '<option value="Sangat Rendah">Sangat Rendah</option>';
+            KLS_RAWAN_options_str  += '<option value="Sangat Tinggi">Sangat Tinggi</option>';
+            KLS_RAWAN_options_str  += '<option value="Sedang">Sedang</option>';
+            KLS_RAWAN_options_str  += '<option value="Tinggi">Tinggi</option>';
+            sel_KLS_RAWAN.innerHTML = KLS_RAWAN_options_str;
+            div_KLS_RAWAN.appendChild(sel_KLS_RAWAN);
+            var lab_KLS_RAWAN = document.createElement('div');
+            lab_KLS_RAWAN.innerHTML = 'KLS_RAWAN';
+            lab_KLS_RAWAN.className = 'filterlabel';
+            div_KLS_RAWAN.appendChild(lab_KLS_RAWAN);
+            var reset_KLS_RAWAN = document.createElement('div');
+            reset_KLS_RAWAN.innerHTML = 'clear filter';
+            reset_KLS_RAWAN.className = 'filterlabel';
+            reset_KLS_RAWAN.onclick = function() {
+                var options = document.getElementById("sel_KLS_RAWAN").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_KLS_RAWAN.appendChild(reset_KLS_RAWAN);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_Int_Hujan = document.createElement('div');
+            div_Int_Hujan.id = "div_Int_Hujan";
+            div_Int_Hujan.className= "filterselect";
+            document.getElementById("menu").appendChild(div_Int_Hujan);
+            sel_Int_Hujan = document.createElement('select');
+            sel_Int_Hujan.multiple = true;
+            sel_Int_Hujan.size = 5;
+            sel_Int_Hujan.id = "sel_Int_Hujan";
+            var Int_Hujan_options_str = "<option value='' unselected></option>";
+            sel_Int_Hujan.onchange = function(){filterFunc()};
+            Int_Hujan_options_str  += '<option value="Rendah">Rendah</option>';
+            Int_Hujan_options_str  += '<option value="Sangat Rendah">Sangat Rendah</option>';
+            Int_Hujan_options_str  += '<option value="Sangat Tinggi">Sangat Tinggi</option>';
+            Int_Hujan_options_str  += '<option value="Sedang">Sedang</option>';
+            Int_Hujan_options_str  += '<option value="Tinggi">Tinggi</option>';
+            sel_Int_Hujan.innerHTML = Int_Hujan_options_str;
+            div_Int_Hujan.appendChild(sel_Int_Hujan);
+            var lab_Int_Hujan = document.createElement('div');
+            lab_Int_Hujan.innerHTML = 'Int_Hujan';
+            lab_Int_Hujan.className = 'filterlabel';
+            div_Int_Hujan.appendChild(lab_Int_Hujan);
+            var reset_Int_Hujan = document.createElement('div');
+            reset_Int_Hujan.innerHTML = 'clear filter';
+            reset_Int_Hujan.className = 'filterlabel';
+            reset_Int_Hujan.onclick = function() {
+                var options = document.getElementById("sel_Int_Hujan").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_Int_Hujan.appendChild(reset_Int_Hujan);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_Soil = document.createElement('div');
+            div_Soil.id = "div_Soil";
+            div_Soil.className= "filterselect";
+            document.getElementById("menu").appendChild(div_Soil);
+            sel_Soil = document.createElement('select');
+            sel_Soil.multiple = true;
+            sel_Soil.size = 2;
+            sel_Soil.id = "sel_Soil";
+            var Soil_options_str = "<option value='' unselected></option>";
+            sel_Soil.onchange = function(){filterFunc()};
+            Soil_options_str  += '<option value="Clay">Clay</option>';
+            Soil_options_str  += '<option value="Sand">Sand</option>';
+            sel_Soil.innerHTML = Soil_options_str;
+            div_Soil.appendChild(sel_Soil);
+            var lab_Soil = document.createElement('div');
+            lab_Soil.innerHTML = 'Soil';
+            lab_Soil.className = 'filterlabel';
+            div_Soil.appendChild(lab_Soil);
+            var reset_Soil = document.createElement('div');
+            reset_Soil.innerHTML = 'clear filter';
+            reset_Soil.className = 'filterlabel';
+            reset_Soil.onclick = function() {
+                var options = document.getElementById("sel_Soil").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_Soil.appendChild(reset_Soil);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_GEOLOGY = document.createElement('div');
+            div_GEOLOGY.id = "div_GEOLOGY";
+            div_GEOLOGY.className= "filterselect";
+            document.getElementById("menu").appendChild(div_GEOLOGY);
+            sel_GEOLOGY = document.createElement('select');
+            sel_GEOLOGY.multiple = true;
+            sel_GEOLOGY.size = 5;
+            sel_GEOLOGY.id = "sel_GEOLOGY";
+            var GEOLOGY_options_str = "<option value='' unselected></option>";
+            sel_GEOLOGY.onchange = function(){filterFunc()};
+            GEOLOGY_options_str  += '<option value="Aluvial">Aluvial</option>';
+            GEOLOGY_options_str  += '<option value="Andesit">Andesit</option>';
+            GEOLOGY_options_str  += '<option value="Batu Pasir">Batu Pasir</option>';
+            GEOLOGY_options_str  += '<option value="Breksi">Breksi</option>';
+            GEOLOGY_options_str  += '<option value="Vulkanik">Vulkanik</option>';
+            sel_GEOLOGY.innerHTML = GEOLOGY_options_str;
+            div_GEOLOGY.appendChild(sel_GEOLOGY);
+            var lab_GEOLOGY = document.createElement('div');
+            lab_GEOLOGY.innerHTML = 'GEOLOGY';
+            lab_GEOLOGY.className = 'filterlabel';
+            div_GEOLOGY.appendChild(lab_GEOLOGY);
+            var reset_GEOLOGY = document.createElement('div');
+            reset_GEOLOGY.innerHTML = 'clear filter';
+            reset_GEOLOGY.className = 'filterlabel';
+            reset_GEOLOGY.onclick = function() {
+                var options = document.getElementById("sel_GEOLOGY").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_GEOLOGY.appendChild(reset_GEOLOGY);
+        </script>
+    </body>
+</html>
